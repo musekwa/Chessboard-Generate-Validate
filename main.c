@@ -4,74 +4,35 @@
 #include "vertical.h"
 #include "horizontal.h"
 #include "diagonal2.h"
+#include "gerador.h"
   
 
-  
-// Imprimir o tabuleiro
-void printMatrix(char M[ROW][COL]) 
-{ 
-    for (int i=0; i< ROW; i++) 
-    { 
-        for (int j=0; j<COL; j++) 
-            printf("%3c ", M[i][j]); 
-        printf("\n"); 
-    } 
-} 
-
-
-//validar todo tabuleiro nas 4 diferentes posicoes
-//imprimir VALIDO, caso a configuracao for valida
-//imprimir INVALIDO, caso a configuracao for invalida
-int validarTabuleiro(char M[ROW][COL]){
-
-    int valorDeRetorno; 
-
-    //validar na vertical:
-    valorDeRetorno = vertical(M);
-    if (valorDeRetorno == 2){
-      printf("INVALIDO\n");
-      return 3;
-    }
-    
-    //validar na horizontal
-    valorDeRetorno = horizontal(M);
-    if (valorDeRetorno == 2){
-      printf("INVALIDO\n");
-      return 4;
-    }
-
-    //validar na primeira diagonal
-    valorDeRetorno = diagonal(M);
-    if (valorDeRetorno == 2){
-      printf("INVALIDO\n");
-      return 5;
-    }
-
-    //validar na segunda diagonal
-    valorDeRetorno = vertical(M);
-    if (valorDeRetorno == 2){
-      printf("INVALIDO\n");
-      return 6;
-    }
-
-    printf ("VALIDO\n"); 
-    return 0;
-}
-  
+ 
 // funcao principal para executar o programa
-int main() 
-{ 
-    char M[ROW][COL] = {
-                        {'-', '-', 'D', '-', '-'}, 
-                        {'-', '-', '-', '-', 'D'}, 
-                        {'-', 'D', '-', '-', '-'}, 
-                        {'-', '-', '-', 'D', '-'}, 
-                        {'D', '-', '-', '-', '-'} 
-                      }; 
+int main(int argc, char *argv[]) {
+  int m, n, q;
+
+  //a seed que utiliza o tempo para permitir gerar numeros aleatorios
+  srand((unsigned)time(NULL));
+
+  if (argc == 4) { //Caso tenha fornecido seguintes argumentos: ./random M N Q
+    m = atoi(argv[1]);
+    n = atoi(argv[2]);
+    q = atoi(argv[3]);
+  }
+  else if (argc == 2) { //Caso tenha fornecido seguintes argumentos: ./random M 
+    m = atoi(argv[1]);
+    n = atoi(argv[1]);
+    q = atoi(argv[1]);   
+  }
+  else if (argc < 2 || argc == 3 || argc < 4) { //Caso nao tenha fornecido nenhum argumento 
+    printf("Usage: ./main m n q\n");
+    return 3;
+  }
+
+  //gerar n configuracao de m x m, cada configuracao contendo q rainhas (D)
+  //mas imprimir apenas as configuracoes validas
+   gerarConfiguracao(m,n, q);
   
-    printf ("Matriz dada \n"); 
-    printMatrix(M); 
-  
-    printf ("\nResultado \n"); 
-    validarTabuleiro(M);
-} 
+  return 0;
+}

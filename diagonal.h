@@ -2,8 +2,8 @@
 #include <stdlib.h> 
   
 
-#define ROW 5 
-#define COL 5 
+#define ROW 8 
+#define COL 8 
   
 // retornar o valor minimo entre os dois 
 int minu(int a, int b){ 
@@ -34,25 +34,28 @@ int max(int a, int b)
 int diagonal(char matrix[ROW][COL]) 
 { 
     // havera ROW + COL - ! linhas na saida
+    int contador = 0;
     for (int linha = 1; linha <= (ROW + COL - 1); linha++) 
     { 
-        int contador = 0;
+        
         int col_inicial =  max(0, linha - ROW); 
   
          int count = min(linha, (COL - col_inicial), ROW); 
   
        //percorrer o tabuleiro em diagonal, linha por linha
+       if (contador <= 1){
+         contador = 0;
         for (int j = 0; j < count; j++){ 
             char c = matrix[minu(ROW, linha)-j-1][col_inicial+j];
             if (c == 'D'){
               contador++;
             }
         }
-        //retorna 2 caso tenha lida mais de um 'D' numa linha diagonal
-        // o que corresponde a configuracao invalida
-        if (contador > 1){
-          return 2;
         }
-    } 
+     }
+  //  printf("\ncontador diagonal: %d\n", contador);
+    if (contador > 1){
+      return 2;
+    }
     return 0;
 } 

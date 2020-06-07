@@ -2,8 +2,6 @@
 #include <stdlib.h> 
   
 
-#define ROW 5 
-#define COL 5 
 
 
 int diagonal2(char matrix[ROW][COL]) {
