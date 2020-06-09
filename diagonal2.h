@@ -4,20 +4,20 @@
 
 
 
-int diagonal2(char matrix[ROW][COL]) {
+int diagonal2(int ROW, int COL, char matrix[ROW][COL]) {
 
   char tmp[ROW][COL]; 
 
   //produzir uma matriz conversa tmp
-  for (int linha = 0; linha < ROW; linha++) {
+  for (int line = 0; line < ROW; line++) {
     int j = 0;
     for (int col = COL-1; col >= 0; col--) {
-      tmp[linha][j++] = matrix[linha][col];
+      tmp[line][j++] = matrix[line][col];
     }
   }
 
   //validar a matrix conversa
   //retornar o valor 0 ou 2, segundo a configuracao for valida (0) ou invalida(2) 
-  int valorDeRetorno = diagonal(tmp);
-  return valorDeRetorno;
+  int returnValue = diagonal(ROW, COL, tmp);
+  return returnValue;
 }

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-//imprimir configuracao
-void imprimirConfiguracao(char M[ROW][COL]) 
+// Print the chessboard configuration
+void printConfiguration(int ROW, int COL, char M[ROW][COL]) 
 { 
     for (int i=0; i< ROW; i++) 
     { 
@@ -13,15 +13,15 @@ void imprimirConfiguracao(char M[ROW][COL])
     } 
 } 
 
-//validar todo tabuleiro nas 4 diferentes posicoes
-//imprimir VALIDO, caso a configuracao for valida
-//imprimir INVALIDO, caso a configuracao for invalida
-int validarTabuleiro(char M[ROW][COL]){
+// Validade the chessboard
+// if the returned value is 2, then the chessboard Configuration is Invalid
+// if the returned value is 0, then the chessboard Configuration is Valid
+int validateChessboad(int ROW, int COL, char M[ROW][COL]){
 
-    int vert = vertical(M); 
-    int horiz = horizontal(M);
-    int diag = diagonal(M);
-    int diag2 = diagonal2(M);
+    int vert = vertical(ROW, COL, M); 
+    int horiz = horizontal(ROW, COL, M);
+    int diag = diagonal(ROW, COL, M);
+    int diag2 = diagonal2(ROW, COL, M);
     if (vert == 0 && horiz == 0 && diag == 0 && diag2 == 0){
       return 0;
     }
@@ -30,16 +30,16 @@ int validarTabuleiro(char M[ROW][COL]){
     }
 }
 
-void gerarConfiguracao(int m, int n, int q) { 
+// Generate n chessboards of m x m size, with q queen randomly inserted fro each.
+void generateChessboard(int m, int n, int q) { 
   int min = 0, max = m-1;
-  int contador = 0;
 
-  char tabuleiro[m][m];
+  char chessboard[m][m];
   for (int i = 0; i < n; i++){
     // produzir o tabuleiro com ---- sem nenhuma rainha
     for (int i = 0; i < m; i++){
       for (int j = 0; j < m; j++){
-        tabuleiro[i][j] = '-';
+        chessboard[i][j] = '-';
       }
     }
 
@@ -55,28 +55,26 @@ void gerarConfiguracao(int m, int n, int q) {
 
       //caso nao haja rainha D nos endereco tabuleiro[i][j]
       // insira a rainha
-      if (tabuleiro[i][j] != 'D'){
-        tabuleiro[i][j] = 'D';
+      if (chessboard[i][j] != 'D'){
+        chessboard[i][j] = 'D';
         it++;
       }
     }
 
-    int retorno;
+    int returnValue;
     //dependendo do valor de retorno, imprimir a configuracao.
     //caso o valor de retorno for 0, imprimir a configuracao, porque ela e valida
     //caso nao, ignorar a configuracao pois ela nao e valida
-    retorno = validarTabuleiro(tabuleiro);
-    if (retorno == 0){
-      printf("Configuracao Valida:\n");
-      // Imprimir o tabuleiro
-      imprimirConfiguracao(tabuleiro);
-      contador++;
+    returnValue = validateChessboad(m, m, chessboard);
+    if (returnValue == 0){
+      printf("\n\nValid Configuration:\n");
     }
-  }
-  //caso dentre das n configuracoes geradas, nehuma for valida
-  //imprimir essa mensagem
-  if (contador == 0){
-    printf("\nNenhuma Configuracao Valida\n");
+    else {
+      printf("\n\nInvalid Configuration:\n");
+    }
+      
+    printConfiguration(m, m, chessboard);
+  
   }
 
 }

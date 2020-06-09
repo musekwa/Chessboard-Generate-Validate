@@ -4,35 +4,34 @@
 #include "vertical.h"
 #include "horizontal.h"
 #include "diagonal2.h"
-#include "gerador.h"
-  
+#include "generator.h"
 
- 
-// funcao principal para executar o programa
+
+// Program execution starts here
 int main(int argc, char *argv[]) {
   int m, n, q;
 
-  //a seed que utiliza o tempo para permitir gerar numeros aleatorios
+  // The time-based random number seed
   srand((unsigned)time(NULL));
 
-  if (argc == 4) { //Caso tenha fornecido seguintes argumentos: ./random M N Q
+  if (argc != 4 && argc != 2) { //In case wrong arguments were provided in the command line 
+    printf("Usage: ./main 5 7 2  ou ./main 5\n");
+    return 3;
+  }
+
+  if (argc == 4) { //In case the command line received the following: ./main <integer> <integer> <integer>
     m = atoi(argv[1]);
     n = atoi(argv[2]);
     q = atoi(argv[3]);
   }
-  else if (argc == 2) { //Caso tenha fornecido seguintes argumentos: ./random M 
+
+  if (argc == 2) { //In case the command line receied the following: ./main <integer> 
     m = atoi(argv[1]);
-    n = atoi(argv[1]);
-    q = atoi(argv[1]);   
-  }
-  else if (argc < 2 || argc == 3 || argc < 4) { //Caso nao tenha fornecido nenhum argumento 
-    printf("Usage: ./main m n q\n");
-    return 3;
+    n = m;
+    q = m;
   }
 
-  //gerar n configuracao de m x m, cada configuracao contendo q rainhas (D)
-  //mas imprimir apenas as configuracoes validas
-   gerarConfiguracao(m,n, q);
+  generateChessboard(m,n, q);
   
   return 0;
 }

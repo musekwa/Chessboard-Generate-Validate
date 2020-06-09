@@ -1,23 +1,25 @@
 #include <stdio.h>
 
+  //Scan the chessboard column by column
+int vertical(int ROW, int COL, char matrix[ROW][COL]) {
 
-int vertical(char matrix[ROW][COL]) {
-  //percorrer todo tabuleiro da primeira coluna a ultima coluna
-  int contador = 0;
+  //check if any column ever has more than 1 queen
+  int counter = 0;
   for (int col = 0; col < COL; col++){
-    if (contador <= 1){
-      contador = 0;
-    for (int linha = 0; linha < ROW; linha++){
-      char c = matrix[linha][col];
+    if (counter <= 1){
+      counter = 0;
+    for (int line = 0; line < ROW; line++){
+      char c = matrix[line][col];
       if (c == 'D'){
-        contador++;
+        counter++;
       }
     }
     }
 
   }
-//  printf("\ncontador vertical: %d\n", contador);
-  if (contador > 1)
+  //If any column ever has more than one queens within it;
+  // then, return 2, otherwise, return 0
+  if (counter > 1)
     return 2;
   return 0;
 }

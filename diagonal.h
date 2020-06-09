@@ -1,11 +1,8 @@
 #include <stdio.h> 
 #include <stdlib.h> 
   
-
-#define ROW 8 
-#define COL 8 
   
-// retornar o valor minimo entre os dois 
+// Return the minimum number between the two integers provided 
 int minu(int a, int b){ 
   if (a < b){
     return a;
@@ -13,12 +10,12 @@ int minu(int a, int b){
     return b;
 } 
   
-// retornar o minimo entre os 3 
+// Return the minimum number between the 3 integers provided
 int min(int a, int b, int c) {
   return minu(minu(a, b), c);
 }
   
-// retornar o maximo entre os dois 
+// return the maximum numer between the 2 integers provided
 int max(int a, int b)
 {
   if ( a > b){
@@ -29,32 +26,33 @@ int max(int a, int b)
 
 
   
-// imprimir em diagonal
-//caso matrix seja valida, retorna 0, caso seja invalida, retorna 2
-int diagonal(char matrix[ROW][COL]) 
+
+// Scan the chessboard diagonally and chech if 
+// two different queens are placed in the same diagonal
+int diagonal(int ROW, int COL, char matrix[ROW][COL]) 
 { 
-    // havera ROW + COL - ! linhas na saida
-    int contador = 0;
-    for (int linha = 1; linha <= (ROW + COL - 1); linha++) 
-    { 
-        
-        int col_inicial =  max(0, linha - ROW); 
+    // Througout chessboard check diagonally
+    int counter = 0;
+    for (int line = 1; line <= (ROW + COL - 1); line++) 
+    {   
+        int firstCol =  max(0, line - ROW); 
   
-         int count = min(linha, (COL - col_inicial), ROW); 
+         int count = min(line, (COL - firstCol), ROW); 
   
-       //percorrer o tabuleiro em diagonal, linha por linha
-       if (contador <= 1){
-         contador = 0;
+       //Search for queens in the diagonal
+       if (counter <= 1){
+         counter = 0;
         for (int j = 0; j < count; j++){ 
-            char c = matrix[minu(ROW, linha)-j-1][col_inicial+j];
-            if (c == 'D'){
-              contador++;
+            char c = matrix[minu(ROW, line)-j-1][firstCol+j];
+            if (c == 'Q'){
+              counter++;
             }
         }
         }
      }
-  //  printf("\ncontador diagonal: %d\n", contador);
-    if (contador > 1){
+    //If any diagonal ever has more than one queens within it;
+    // then, return 2, otherwise, return 0
+    if (counter > 1){
       return 2;
     }
     return 0;
