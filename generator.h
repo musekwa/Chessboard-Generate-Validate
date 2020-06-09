@@ -55,8 +55,8 @@ void generateChessboard(int m, int n, int q) {
 
       //caso nao haja rainha D nos endereco tabuleiro[i][j]
       // insira a rainha
-      if (chessboard[i][j] != 'D'){
-        chessboard[i][j] = 'D';
+      if (chessboard[i][j] != 'Q'){
+        chessboard[i][j] = 'Q';
         it++;
       }
     }
